@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   political_party.associate = function(models) {
     // associations can be defined here
-    political_party.hasMany(models.candidates)
+    political_party.hasMany(models.candidates,{
+      foreignKey: 'political_partyId',
+      as: 'party',
+      cascade: true,
+    })
   };
   return political_party;
 };

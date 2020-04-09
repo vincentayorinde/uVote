@@ -11,7 +11,7 @@ dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 // const config = require(__dirname + '/../config/config.json')[env];
 const basename = path.basename(__filename);
-const db = {};
+let db = {};
 const config = configFile[env];
 let sequelize;
 
