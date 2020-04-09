@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const consola = require('consola');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+const session = require('express-session')
 
 const db = require('../db/models');
 const Routes = require('../routes');
@@ -14,8 +16,10 @@ dotenv.config();
 
 app.use(cors());
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(session({ resave: false, saveUninitialized: false, secret: process.env.SESSION_SECRET}));
+// app.use(bodyParser.json());
 
 // Routes which should handle requests
 Routes(app);
