@@ -42,7 +42,6 @@ export default {
         const { email, password } = req.body;
 
         const newEmail = email.toLowerCase();
-        console.log('the login')
 
         try {
             console.log('the login try')

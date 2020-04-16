@@ -1,0 +1,44 @@
+import db from '../db/models';
+import { decodeToken } from '../utils';
+
+
+class Middleware {
+    static async authenticate(req, res, next) {
+        const token = req.headers['x-access-token'];
+    
+        try {
+          const decodedToken = decodeToken(token);
+    
+          const { email } = decodedToken;
+    
+          const user = await db.users.findOne({
+            where: { email },
+          });
+    
+          if (!user) {
+            return res.status(401).send({
+              message: 'Unauthorized',
+            });
+          }
+          req.user = user;
+          next();
+        } catch (error) {
+          return res.status(400).send({
+            message: 'Unauthorized access',
+          });
+        }
+      }
+
+      static async isAdmin(req, res, next) {
+        const { role } = req.user;
+    
+        if (role !== 'admin') {
+          return res.status(401).send({
+            error: 'Unauthorized',
+          });
+        }
+        next();
+      }
+}
+
+export default Middleware;

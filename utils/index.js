@@ -24,8 +24,8 @@ export const messages = {
 };
 
 export const sanitizeRules = {
-    firstName: 'trim',
-    lastName: 'trim',
+    first_name: 'trim',
+    last_name: 'trim',
     email: 'trim',
     password: 'trim',
 };
@@ -41,7 +41,9 @@ export const validatorInstance = Validator(validations, Vanilla);
 
 export const getToken = (id, email) =>
     jwt.sign({ id, email }, process.env.SECRET, {
-        expiresIn: '5h',
+        expiresIn: '1h',
     });
 
 export const randomString = () => crypto.randomBytes(11).toString('hex');
+
+export const decodeToken = (token) => jwt.verify(token, process.env.SECRET);
