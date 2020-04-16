@@ -42,9 +42,11 @@ export default {
         const { email, password } = req.body;
 
         const newEmail = email.toLowerCase();
+        console.log('the login')
 
         try {
-            const user = await db.users.find({
+            console.log('the login try')
+            const user = await db.users.findOne({
                 where: { email: newEmail },
             });
             console.log('the user', user);

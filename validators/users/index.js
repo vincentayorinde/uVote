@@ -31,16 +31,11 @@ export default {
 
     signIn: async (req, res, next) => {
         const rules = {
-            email: 'required|email|unique:user',
-            password: 'required|min:8|max:30',
+            email: 'required|email',
+            password: 'required',
         };
 
         let data = req.body;
-        const email = data.email.toLowerCase();
-        data = {
-            ...data,
-            email,
-        };
 
         sanitize(data, sanitizeRules);
         try {

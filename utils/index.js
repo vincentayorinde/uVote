@@ -1,6 +1,7 @@
 import { validations } from 'indicative';
 import { Vanilla } from 'indicative/builds/formatters';
 import Validator from 'indicative/builds/validator';
+
 import db from '../db/models';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -32,8 +33,7 @@ export const sanitizeRules = {
 validations.unique = async (data, field, message, args, get) => {
     const fieldValue = get(data, field);
     if (!fieldValue) return;
-    console.log('the users', args[0])
-    const row = await db.users.findOne({ where: { [field]: fieldValue } });
+    const row = await db[args[0]].findOne({ where: { [field]: fieldValue } });
     if (row) throw message;
 };
 
@@ -44,5 +44,4 @@ export const getToken = (id, email) =>
         expiresIn: '5h',
     });
 
-    export const randomString = () => crypto.randomBytes(11).toString('hex');
-
+export const randomString = () => crypto.randomBytes(11).toString('hex');
