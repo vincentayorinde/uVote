@@ -13,6 +13,14 @@ export default {
         } = req.body;
 
         try {
+            const checkVoter = await db.voters.findOne({
+                where: { voter_id },
+            });
+            if (checkVoter) {
+                return res.status(403).send({
+                    error: 'Voter already exists',
+                });
+            }
             const voter = await db.voters.create({
                 voter_id,
                 first_name,
@@ -21,8 +29,6 @@ export default {
                 dob,
                 occupation,
             });
-            console.log('the voter', voter);
-
             return res.status(201).json({
                 message: 'Voter Registration Successful',
                 voter
