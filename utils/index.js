@@ -1,9 +1,11 @@
-const { validations } = require('indicative');
-const { Vanilla } = require('indicative/builds/formatters');
-const Validator = require('indicative/builds/validator');
-const db = require('../db/models');
+import { validations } from 'indicative';
+import { Vanilla } from 'indicative/builds/formatters';
+import Validator from 'indicative/builds/validator';
+import db from '../db/models';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
-const messages = {
+export const messages = {
     required: 'Input your {{ field }}',
     required_with_any:
         'You have to provide a {{ field }} for any {{ argument.0 }}',
@@ -20,7 +22,7 @@ const messages = {
     in: 'Wrong user role provided',
 };
 
-const sanitizeRules = {
+export const sanitizeRules = {
     firstName: 'trim',
     lastName: 'trim',
     email: 'trim',
@@ -30,11 +32,17 @@ const sanitizeRules = {
 validations.unique = async (data, field, message, args, get) => {
     const fieldValue = get(data, field);
     if (!fieldValue) return;
+    console.log('the users', args[0])
     const row = await db.users.findOne({ where: { [field]: fieldValue } });
-    console.log('the row', row);
     if (row) throw message;
 };
 
-const validatorInstance = Validator(validations, Vanilla);
+export const validatorInstance = Validator(validations, Vanilla);
 
-module.exports = { messages, validatorInstance, sanitizeRules };
+export const getToken = (id, email) =>
+    jwt.sign({ id, email }, process.env.SECRET, {
+        expiresIn: '5h',
+    });
+
+    export const randomString = () => crypto.randomBytes(11).toString('hex');
+
