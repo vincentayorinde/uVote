@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon server/index.js",
+        "dev": "nodemon --exec babel-node server/index.js",
+        "start": "babel-node server/index.js",
         "rollback:migration": "sequelize db:migrate:undo:all",
         "migrate": "sequelize db:migrate"
     },
@@ -20,6 +21,11 @@
     },
     "homepage": "https://github.com/vincentayorinde/uVote#readme",
     "dependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.9.0",
+        "@babel/node": "^7.8.7",
+        "@babel/preset-env": "^7.9.5",
+        "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "consola": "^2.11.3",
         "cookie-parser": "^1.4.5",
@@ -28,6 +34,7 @@
         "express": "^4.17.1",
         "express-session": "^1.17.0",
         "indicative": "^5.0.8",
+        "jsonwebtoken": "^8.5.1",
         "morgan": "^1.10.0",
         "mysql": "^2.18.1",
         "mysql2": "^2.1.0",

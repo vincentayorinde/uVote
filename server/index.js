@@ -1,14 +1,14 @@
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const consola = require('consola');
-const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
-const session = require('express-session')
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import consola from 'consola';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
-const db = require('../db/models');
-const Routes = require('../routes');
+import db from '../db/models';
+import Routes from '../routes';
 
 const app = express();
 
@@ -18,8 +18,14 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.SESSION_SECRET));
-app.use(session({ resave: false, saveUninitialized: false, secret: process.env.SESSION_SECRET}));
-// app.use(bodyParser.json());
+app.use(
+    session({
+        resave: false,
+        saveUninitialized: false,
+        secret: process.env.SESSION_SECRET,
+    })
+);
+app.use(bodyParser.json());
 
 // Routes which should handle requests
 Routes(app);
@@ -56,4 +62,4 @@ dbconnection
         /* istanbul ignore next */
         throw e.message;
     });
-module.exports = { app, db };
+export { app, db };
