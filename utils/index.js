@@ -1,10 +1,17 @@
 import { validations } from 'indicative';
 import { Vanilla } from 'indicative/builds/formatters';
 import Validator from 'indicative/builds/validator';
+import { v2 as cloudinary } from 'cloudinary';
 
 import db from '../db/models';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDI_NAME,
+    api_key: process.env.CLOUDI_API_KEY,
+    api_secret: process.env.CLOUDI_API_SECRET,
+  });
 
 export const messages = {
     required: 'Input your {{ field }}',
@@ -47,3 +54,19 @@ export const getToken = (id, email) =>
 export const randomString = () => crypto.randomBytes(11).toString('hex');
 
 export const decodeToken = (token) => jwt.verify(token, process.env.SECRET);
+
+export const uploadImage = (img, publicId) => new Promise((resolve, reject) => {
+    console.log('the image data', img, publicId)
+    cloudinary.uploader.upload(
+      img.tempFilePath,
+      { public_id: publicId },
+      (err, res) => (err ? reject(err) : resolve(res.url))
+    );
+  });
+  
+  export const deleteImage = publicId => new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(
+      publicId,
+      (err, res) => (err ? reject(err) : resolve(res.url))
+    );
+  });
