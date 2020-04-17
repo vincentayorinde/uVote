@@ -6,6 +6,8 @@ import consola from 'consola';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import fileupload from 'express-fileupload';
+
 
 import db from '../db/models';
 import Routes from '../routes';
@@ -26,7 +28,11 @@ app.use(
     })
 );
 app.use(bodyParser.json());
-
+app.use(
+    fileupload({
+        useTempFiles: true,
+    })
+);
 // Routes which should handle requests
 Routes(app);
 
