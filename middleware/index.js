@@ -24,7 +24,7 @@ class Middleware {
           next();
         } catch (error) {
           return res.status(400).send({
-            message: 'Unauthorized access',
+            message: 'Session Expired',
           });
         }
       }
