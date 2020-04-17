@@ -14,11 +14,11 @@ export default {
                     error: 'Polical Party already exists',
                 });
             }
-            const plogo = await uploadImage(req.files.logo, `${name}-logoImg`);
+            const logo = await uploadImage(req.files.logo, `${name}-logoImg`);
             const party = await db.political_party.create({
                 name,
                 bio,
-                logo: plogo,
+                logo,
                 established,
             });
             return res.status(201).json({
