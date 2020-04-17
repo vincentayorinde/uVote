@@ -56,7 +56,6 @@ export const randomString = () => crypto.randomBytes(11).toString('hex');
 export const decodeToken = (token) => jwt.verify(token, process.env.SECRET);
 
 export const uploadImage = (img, publicId) => new Promise((resolve, reject) => {
-    console.log('the image data', img, publicId)
     cloudinary.uploader.upload(
       img.tempFilePath,
       { public_id: publicId },
