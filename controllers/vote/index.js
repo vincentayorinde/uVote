@@ -65,7 +65,6 @@ export default {
             }
             let result = {};
             vote.forEach((x) => {
-                console.log(x.candidate.first_name+' '+x.candidate.last_name);
                 let cname = x.candidate.first_name+' '+x.candidate.last_name;
                 result[cname] = (result[cname] || 0) + 1;
             });
