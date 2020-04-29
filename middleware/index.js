@@ -1,5 +1,5 @@
 import db from '../db/models';
-import { decodeToken } from '../utils';
+import { decodeToken, tokenExpired } from '../utils';
 
 
 class Middleware {
@@ -24,7 +24,7 @@ class Middleware {
           next();
         } catch (error) {
           return res.status(400).send({
-            message: 'Session Expired',
+            message: 'Unauthorized',
           });
         }
       }
@@ -37,6 +37,20 @@ class Middleware {
             error: 'Unauthorized',
           });
         }
+        next();
+      }
+
+      static async isExpiredToken(req, res, next) {
+        const token = req.headers['x-access-token'];
+    
+        const isblocked = await tokenExpired(token);
+    
+        if (isblocked) {
+          return res.status(403).send({
+            message: 'Unauthorized',
+          });
+        }
+    
         next();
       }
 }

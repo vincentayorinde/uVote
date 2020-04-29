@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import db from '../../db/models';
+import { expiireThisToken } from '../../utils'
 
 export default {
     signUp: async (req, res) => {
@@ -73,4 +74,12 @@ export default {
             });
         }
     },
+
+    signOut: async (req, res) => {
+        const token = req.headers['x-access-token'];
+        await expiireThisToken(token);
+        return res.status(200).send({
+          message: 'Signed out successfully'
+        });
+      },
 };

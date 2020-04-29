@@ -8,15 +8,17 @@ const router = express.Router();
 router.post(
     '/add',
     Middleware.authenticate,
+    Middleware.isExpiredToken,
     Middleware.isAdmin,
     Validation.addVoter,
     Voter.addVoter
 );
-router.get('/', Middleware.authenticate, Middleware.isAdmin, Voter.getVoters);
-router.get('/:id', Middleware.authenticate, Middleware.isAdmin, Voter.getVoter);
+router.get('/', Middleware.authenticate,  Middleware.isExpiredToken, Middleware.isAdmin, Voter.getVoters);
+router.get('/:id', Middleware.authenticate,  Middleware.isExpiredToken, Middleware.isAdmin, Voter.getVoter);
 router.put(
     '/',
     Middleware.authenticate,
+    Middleware.isExpiredToken,
     Middleware.isAdmin,
     Validation.addVoter,
     Voter.updateVoter
@@ -24,6 +26,7 @@ router.put(
 router.delete(
     '/:id',
     Middleware.authenticate,
+    Middleware.isExpiredToken,
     Middleware.isAdmin,
     Voter.deleteVoter
 );

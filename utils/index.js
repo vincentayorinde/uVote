@@ -2,7 +2,6 @@ import { validations } from 'indicative';
 import { Vanilla } from 'indicative/builds/formatters';
 import Validator from 'indicative/builds/validator';
 import { v2 as cloudinary } from 'cloudinary';
-
 import db from '../db/models';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -69,3 +68,19 @@ export const uploadImage = (img, publicId) => new Promise((resolve, reject) => {
       (err, res) => (err ? reject(err) : resolve(res.url))
     );
   });
+
+
+  export const expiireThisToken = async (token) => {
+    const decoded = decodeToken(token);
+    await db.expiredtokens.create({
+      token,
+      expireAt: decoded.exp,
+    });
+  };
+
+  export const tokenExpired = async (token) => {
+    const blockedToken = await db.expiredtokens.findOne({
+      where: { token },
+    });
+    return !!blockedToken;
+  };

@@ -9,6 +9,7 @@ router.post('/', Validation.addVote, Vote.addVote);
 router.get(
     '/result',
     Middleware.authenticate,
+    Middleware.isExpiredToken,
     Middleware.isAdmin,
     Vote.getResult
 );
