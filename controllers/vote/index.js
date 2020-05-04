@@ -56,7 +56,7 @@ export default {
                     {
                         model: db.candidates,
                         as: 'candidate',
-                        attributes: ['first_name', 'last_name'],
+                        attributes: ['first_name', 'last_name', 'display_picture'],
                     },
                 ],
             });
@@ -65,12 +65,12 @@ export default {
             }
             let result = {};
             vote.forEach((x) => {
-                let cname = x.candidate.first_name+' '+x.candidate.last_name;
+                let cname = x.candidate.first_name+' '+x.candidate.last_name+','+x.candidate.display_picture;
                 result[cname] = (result[cname] || 0) + 1;
             });
             let percentage = {};
             for (let [candidate, vote_count] of Object.entries(result)) {
-                percentage[candidate] = parseFloat(vote_count / allVotes.count * 100).toFixed(2)+'% with ('+vote_count+' votes)';
+                percentage[candidate] = parseFloat(vote_count / allVotes.count * 100).toFixed(2)+','+vote_count;
             }
             return res.status(200).json({
                 message: 'The result',

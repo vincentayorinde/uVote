@@ -16,7 +16,7 @@ router.post(
 router.get('/', Middleware.authenticate,  Middleware.isExpiredToken, Middleware.isAdmin, Voter.getVoters);
 router.get('/:id', Middleware.authenticate,  Middleware.isExpiredToken, Middleware.isAdmin, Voter.getVoter);
 router.put(
-    '/',
+    '/:id',
     Middleware.authenticate,
     Middleware.isExpiredToken,
     Middleware.isAdmin,

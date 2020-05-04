@@ -93,7 +93,7 @@ export default {
         } = req.body;
         try {
             const foundVoter = await db.voters.findOne({
-                where: { voter_id },
+                where: { id: req.params.id },
             });
             if (!foundVoter) {
                 return res.status(404).send({
