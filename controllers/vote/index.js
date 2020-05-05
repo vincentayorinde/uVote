@@ -2,6 +2,36 @@ import Sequelize from 'sequelize';
 import db from '../../db/models';
 
 export default {
+    checkVoter: async (req,res)=> {
+        try {
+            const foundVoter = await db.voters.findOne({
+                where: { voter_id: req.body.votersId },
+            });
+            if (!foundVoter) {
+                return res.status(400).send({
+                    error: 'Voter does not exist',
+                });
+            }
+            const checkVote = await db.votes.findOne({
+                where: { voter_id: req.body.votersId },
+            });
+            if (checkVote) {
+                return res.status(400).send({
+                    error: 'You already Voted!',
+                });
+            }
+            return res.status(200).json({
+                message: 'You can now cast your Vote!',
+                foundVoter,
+            });
+        } catch (e) {
+            console.log('the error', e);
+            /* istanbul ignore next */
+            return res.status(500).json({
+                error: e.message,
+            });
+        }
+    },
     addVote: async (req, res) => {
         const { candidatesId, votersId } = req.body;
         try {
@@ -56,7 +86,7 @@ export default {
                     {
                         model: db.candidates,
                         as: 'candidate',
-                        attributes: ['first_name', 'last_name', 'display_picture'],
+                        attributes: ['first_name', 'last_name', 'display_picture', 'id'],
                     },
                 ],
             });
@@ -65,7 +95,7 @@ export default {
             }
             let result = {};
             vote.forEach((x) => {
-                let cname = x.candidate.first_name+' '+x.candidate.last_name+','+x.candidate.display_picture;
+                let cname = x.candidate.first_name+' '+x.candidate.last_name+','+x.candidate.display_picture+','+x.candidate.id;
                 result[cname] = (result[cname] || 0) + 1;
             });
             let percentage = {};
