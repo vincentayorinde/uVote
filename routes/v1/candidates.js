@@ -13,13 +13,7 @@ router.post(
     Validation.addCandidate,
     Candidate.addCandidate
 );
-router.get(
-    '/',
-    Middleware.authenticate,
-    Middleware.isExpiredToken,
-    Middleware.isAdmin,
-    Candidate.getCandidates
-);
+router.get('/', Candidate.getCandidates);
 router.get(
     '/:id',
     Middleware.authenticate,
