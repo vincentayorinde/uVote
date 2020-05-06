@@ -8,7 +8,8 @@
         "dev": "nodemon --exec babel-node server/index.js",
         "start": "babel-node server/index.js",
         "rollback:migration": "sequelize db:migrate:undo:all",
-        "migrate": "sequelize db:migrate"
+        "migrate": "sequelize db:migrate",
+        "heroku-postbuild": " npm run migrate"
     },
     "repository": {
         "type": "git",

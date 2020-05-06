@@ -1,0 +1,39 @@
+{
+    "env": {
+        "DATABASE_URL": {
+            "required": true
+        },
+        "SECRET": {
+            "required": true
+        },
+        "SESSION_SECRET": {
+            "required": true
+        },
+        "BASE_URL": {
+            "required": true
+        }
+    },
+    "addons": [
+        {
+            "plan": "heroku-mysql",
+            "as": "DATABASE_URL",
+            "options": {
+                "version": "9.5"
+            }
+        }
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ],
+    "description": "",
+    "formation": {
+        "web": {
+            "quantity": 1
+        }
+    },
+    "name": "uvote-api",
+    "scripts": {},
+    "stack": "heroku-18"
+}
