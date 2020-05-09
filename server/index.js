@@ -59,8 +59,8 @@ dbconnection
     .authenticate()
     .then(() => {
         consola.success('Connection to database successful');
-        app.listen(process.env._PORT, () => {
-            consola.success(`Server start at port ${process.env._PORT}`);
+        app.listen(process.env.PORT, () => {
+            consola.success(`Server start at port ${process.env.PORT}`);
         });
     })
     .catch((e) => {
