@@ -15,7 +15,7 @@
     },
     "addons": [
         {
-            "plan": "heroku-mysql",
+            "plan": "heroku-postgresql",
             "as": "DATABASE_URL",
             "options": {
                 "version": "9.5"
@@ -33,7 +33,7 @@
             "quantity": 1
         }
     },
-    "name": "uvote-api",
+    "name": "uvote-web",
     "scripts": {},
     "stack": "heroku-18"
 }
