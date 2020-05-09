@@ -16,7 +16,7 @@ export default {
         const newEmail = email.toLowerCase();
 
         try {
-            const user = await db.users.create({
+            const user = await db.user.create({
                 first_name,
                 last_name,
                 email: newEmail,
@@ -46,7 +46,7 @@ export default {
 
         try {
             console.log('the login try')
-            const user = await db.users.findOne({
+            const user = await db.user.findOne({
                 where: { email: newEmail },
             });
             console.log('the user', user);

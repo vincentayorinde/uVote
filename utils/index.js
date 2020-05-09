@@ -39,6 +39,8 @@ export const sanitizeRules = {
 validations.unique = async (data, field, message, args, get) => {
     const fieldValue = get(data, field);
     if (!fieldValue) return;
+    console.log('the args', args[0]+'s')
+    if(db.sequelize) console.log('the table', db[args[0]])
     const row = await db[args[0]].findOne({ where: { [field]: fieldValue } });
     if (row) throw message;
 };

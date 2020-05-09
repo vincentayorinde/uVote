@@ -3,7 +3,7 @@ import { getToken, randomString } from '../../utils';
 
 module.exports = (sequelize, DataTypes) => {
     const users = sequelize.define(
-        'users',
+        'user',
         {
             first_name: DataTypes.STRING,
             last_name: DataTypes.STRING,
