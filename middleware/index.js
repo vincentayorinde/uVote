@@ -11,7 +11,7 @@ class Middleware {
     
           const { email } = decodedToken;
     
-          const user = await db.users.findOne({
+          const user = await db.user.findOne({
             where: { email },
           });
     

@@ -11,6 +11,7 @@ export default {
             gender,
             political_partyId,
         } = req.body;
+        console.log('the body data')
         try {
             const checkCandidate = await db.candidates.findOne({
                 where: { first_name, last_name },
